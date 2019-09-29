@@ -31,6 +31,7 @@ const API_KEY = 'd9c10be08af503c0c64748b3c4a95076';
 const BASE_URL = `https://api.darksky.net/forecast`;
 
 // Fake forecast data used if we can't reach the Dark Sky API
+/*
 const fakeForecast = {
   fakeData: true,
   latitude: 0,
@@ -113,25 +114,29 @@ const fakeForecast = {
       },
     ],
   },
+  flags:{
+    units: 'pt'
+  }
 };
-
+*/
 /**
  * Generates a fake forecast in case the weather API is not available.
  *
  * @param {String} location GPS location to use.
  * @return {Object} forecast object.
  */
+/*
 function generateFakeForecast(location) {
   location = location || '40.7720232,-73.9732319';
   const commaAt = location.indexOf(',');
 
   // Create a new copy of the forecast
-  const result = Object.assign({}, fakeForecast);
+  const result = Object.assign({}, fakeForecast);aaaaf
   result.latitude = parseFloat(location.substr(0, commaAt));
   result.longitude = parseFloat(location.substr(commaAt + 1));
   return result;
 }
-
+*/
 
 /**
  * Gets the weather forecast from the Dark Sky API for the given location.
@@ -153,7 +158,7 @@ function getForecast(req, resp) {
     }, FORECAST_DELAY);
   }).catch((err) => {
     console.error('Dark Sky API Error:', err.message);
-    resp.json(generateFakeForecast(location));
+    // resp.json(generateFakeForecast(location));
   });
 }
 
