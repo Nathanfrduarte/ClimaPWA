@@ -25,7 +25,7 @@
 <body>
   <!-- Menu superior -->
   <nav class="header">
-    <!-- Icone para acesso a menu lateral -->
+    <!-- Icone para acesso ao menu lateral -->
     <button id="sideMenu" onclick="openNav()" aria-label="menu"></button>
     
     <h1>
@@ -44,14 +44,17 @@
       <a href="#" style="padding-top: 110px">Tela Principal</a>
       <a href="#">Outra tela</a>
   </div>
+  <!-- Fim menu lateral -->
 
   <!-- Conteúdo da página -->
   <main id="main">
-    <!-- Botão para adicionar novo local -->
+    <!-- Botão para adicionar novo -->
     <button id="butAdd" class="fab" aria-label="Add">
       <span class="icon add"></span>
     </button>
+    <!-- Fim botão novo-->
 
+    <!-- Cards metereológicos -->
     <div id="weather-template" class="weather-card" style="margin-top: 50px;" hidden>
       <div class="card-spinner">
         <svg viewBox="0 0 32 32" width="32" height="32">
@@ -93,6 +96,8 @@
           </div>
         </div>
       </div>
+      <!-- Fim dia atual -->
+
       <!-- Informações dos próximos dias -->
       <div class="future">
         <div class="oneday">
@@ -166,10 +171,12 @@
           </div>
         </div>
       </div>
+      <!-- Fim próximos dias -->
     </div>
+    <!-- Fim card metereológicos-->
   </main>
 
-  <!-- Caixa de seleção para adicionar novo -->
+  <!-- Dialog para adição de novo clima -->
   <div id="addDialogContainer">
     <div class="dialog">
       <div class="dialog-title">Adicionar nova cidade</div>
@@ -204,9 +211,12 @@
       </div> -->
     </div>
   </div>
+  <!-- Fim Dialog -->
 
   <!-- Dependências -->
+  <!-- Biblioteca JavaScript para tabalhar com questões de Data e Hora -->
   <script src="scripts/luxon-1.11.4.js"></script>
+  <!-- Funções da aplicação -->
   <script src="scripts/app.js"></script>
   <script src="scripts/install.js"></script>
   <!-- Bootstrap -->
@@ -214,6 +224,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+  <!-- JavaScript -->
   <script>
     // Registrar service worker
     if ('serviceWorker' in navigator) {
