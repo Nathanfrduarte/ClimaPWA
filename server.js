@@ -125,6 +125,7 @@ const fakeForecast = {
  * @param {String} location GPS location to use.
  * @return {Object} forecast object.
  */
+
 /*
 function generateFakeForecast(location) {
   location = location || '40.7720232,-73.9732319';
@@ -145,8 +146,16 @@ function generateFakeForecast(location) {
  * @param {Response} resp response object from Express.
  */
 function getForecast(req, resp) {
-  const location = req.params.location || '40.7720232,-73.9732319';
-  const url = `${BASE_URL}/${API_KEY}/${location}`;
+  const location = req.params.location || '-19.9417305,-44.332391';
+  var exclude = "?exclude=";
+  const language = "?lang=pt";
+  const unit = "?units=auto";
+  
+  const url = `${BASE_URL}/${API_KEY}/${location}` + exclude + language + unit;
+
+  // https://api.darksky.net/forecast/d9c10be08af503c0c64748b3c4a95076/-18.5142135,-49.9495219?exclude=minutely,hourly,daily,alerts,flags?lang=pt?units=auto
+  // Betim: -19.9417305,-44.332391
+  // C = (F-32) /1,8
   fetch(url).then((resp) => {
     if (resp.status !== 200) {
       throw new Error(resp.statusText);

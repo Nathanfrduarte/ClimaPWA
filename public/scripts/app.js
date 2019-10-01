@@ -1,20 +1,40 @@
-/*
- * @license
- * Your First PWA Codelab (https://g.co/codelabs/pwa)
- * Copyright 2019 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License
+/**
+ * Initialize the app, gets the list of locations from local storage, then
+ * renders the initial data.
  */
+function init() {
+  // Get the location list, and update the UI.
+  weatherApp.selectedLocations = loadLocationList();
+  updateData();
+  getLocalizacao();
+  // Set up the event handlers for all of the buttons.
+  document.getElementById('butRefresh').addEventListener('click', updateData);
+  document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
+  document.getElementById('butDialogCancel').addEventListener('click', toggleAddDialog);
+  document.getElementById('butDialogAdd').addEventListener('click', addLocation);  
+}
+
+// Permitir Localização atual
+function getLocalizacao() {
+  // Verificar se o navegador tem suporte para geoocalização
+  if (!navigator.geolocation) {
+    alert("Esse navegador não tem suporte para localização");
+  } else {
+    //This will make appear a pop up asking for permission 
+    navigator.geolocation.getCurrentPosition(showPosition, error);
+    //In case the permission is granted 
+    function showPosition(position) {
+      user_lat = position.coords.latitude;
+      user_long = position.coords.longitude;
+    }
+    //In case the permission is denied 
+    function error() {
+      alert("Erro: Permita sua localização para um melhor funcionamento");
+    }
+  }
+}
+
+// Não sei oq é isso
 'use strict';
 
 const weatherApp = {
@@ -35,6 +55,7 @@ function toggleAddDialog() {
 function addLocation() {
   // Hide the dialog
   toggleAddDialog();
+
   // Get the selected city
   const select = document.getElementById('selectCityToAdd');
   const selected = select.options[select.selectedIndex];
@@ -90,16 +111,11 @@ function renderForecast(card, data) {
     .setZone(data.timezone)
     .toFormat('DDDD t');
   card.querySelector('.date').textContent = forecastFrom;
-  card.querySelector('.current .icon')
-    .className = `icon ${data.currently.icon}`;
-  card.querySelector('.current .temperature .value')
-    .textContent = Math.round(data.currently.temperature);
-  card.querySelector('.current .humidity .value')
-    .textContent = Math.round(data.currently.humidity * 100);
-  card.querySelector('.current .wind .value')
-    .textContent = Math.round(data.currently.windSpeed);
-  card.querySelector('.current .wind .direction')
-    .textContent = Math.round(data.currently.windBearing);
+  card.querySelector('.current .icon').className = `icon ${data.currently.icon}`;
+  card.querySelector('.current .temperature .value').textContent = Math.round((data.currently.temperature-32)/1.8);
+  card.querySelector('.current .humidity .value').textContent = Math.round(data.currently.humidity * 100);
+  card.querySelector('.current .wind .value').textContent = Math.round(data.currently.windSpeed);
+  card.querySelector('.current .wind .direction').textContent = Math.round(data.currently.windBearing);
   const sunrise = luxon.DateTime
     .fromSeconds(data.daily.data[0].sunriseTime)
     .setZone(data.timezone)
@@ -121,10 +137,8 @@ function renderForecast(card, data) {
       .toFormat('ccc');
     tile.querySelector('.date').textContent = forecastFor;
     tile.querySelector('.icon').className = `icon ${forecast.icon}`;
-    tile.querySelector('.temp-high .value')
-      .textContent = Math.round(forecast.temperatureHigh);
-    tile.querySelector('.temp-low .value')
-      .textContent = Math.round(forecast.temperatureLow);
+    tile.querySelector('.temp-high .value').textContent = Math.round((forecast.temperatureHigh-32)/1.8);
+    tile.querySelector('.temp-low .value').textContent = Math.round((forecast.temperatureLow-32)/1.8);
   });
 
   // If the loading spinner is still visible, remove it.
@@ -192,8 +206,7 @@ function getForecastCard(location) {
   const newCard = document.getElementById('weather-template').cloneNode(true);
   newCard.querySelector('.location').textContent = location.label;
   newCard.setAttribute('id', id);
-  newCard.querySelector('.remove-city')
-    .addEventListener('click', removeLocation);
+  newCard.querySelector('.remove-city').addEventListener('click', removeLocation);
   document.querySelector('main').appendChild(newCard);
   newCard.removeAttribute('hidden');
   return newCard;
@@ -209,9 +222,9 @@ function updateData() {
     const card = getForecastCard(location);
     // CODELAB: Add code to call getForecastFromCache
     getForecastFromCache(location.geo)
-    .then((forecast) => {
-      renderForecast(card, forecast);
-    });
+      .then((forecast) => {
+        renderForecast(card, forecast);
+      });
     // Get the forecast data from the network.
     getForecastFromNetwork(location.geo)
       .then((forecast) => {
@@ -245,29 +258,11 @@ function loadLocationList() {
     }
   }
   if (!locations || Object.keys(locations).length === 0) {
-    const key = '40.7720232,-73.9732319';
+    const key = '-19.9417305,-44.332391';
     locations = {};
-    locations[key] = { label: 'New York City', geo: '40.7720232,-73.9732319' };
+    locations[key] = { label: 'Betim, MG', geo: '-19.9417305,-44.332391' };
   }
   return locations;
-}
-
-/**
- * Initialize the app, gets the list of locations from local storage, then
- * renders the initial data.
- */
-function init() {
-  // Get the location list, and update the UI.
-  weatherApp.selectedLocations = loadLocationList();
-  updateData();
-
-  // Set up the event handlers for all of the buttons.
-  document.getElementById('butRefresh').addEventListener('click', updateData);
-  document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
-  document.getElementById('butDialogCancel')
-    .addEventListener('click', toggleAddDialog);
-  document.getElementById('butDialogAdd')
-    .addEventListener('click', addLocation);
 }
 
 init();
