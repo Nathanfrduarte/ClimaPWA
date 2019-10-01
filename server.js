@@ -147,7 +147,7 @@ function generateFakeForecast(location) {
  */
 function getForecast(req, resp) {
   const location = req.params.location || '-19.9417305,-44.332391';
-  var exclude = "?exclude=";
+  var exclude = "?exclude="; //?exclude=minutely,hourly,daily,alerts,flags
   const language = "?lang=pt";
   const unit = "?units=auto";
   
