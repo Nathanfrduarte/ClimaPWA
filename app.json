@@ -1,0 +1,17 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ],
+  "description": "",
+  "env": {
+  },
+  "formation": {
+  },
+  "name": "ClimaPWA",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
