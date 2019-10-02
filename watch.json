@@ -1,8 +1,7 @@
 {
   "install": {
     "include": [
-      "^package\\.json$",
-      "^\\.env$"
+      "^package\\.json$"
     ]
   },
   "restart": {
@@ -10,7 +9,6 @@
       "^public/"
     ],
     "include": [
-      "^\\.env$",
       "\\.js$",
       "\\.json"
     ]

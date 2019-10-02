@@ -233,7 +233,7 @@ function updateData() {
       .then((forecast) => {
         renderForecast(card, forecast);
       });
-  });
+  });  
 }
 
 /**
