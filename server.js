@@ -145,18 +145,22 @@ function generateFakeForecast(location) {
  * @param {Request} req request object from Express.
  * @param {Response} resp response object from Express.
  */
+
+
 function getForecast(req, resp) {
-  const location = req.params.location || '-19.9417305,-44.332391';
-  var exclude = "?exclude="; //?exclude=minutely,hourly,daily,alerts,flags
+  // u = document.getElementById('userLocation').value;
+  const location = req.params.location || "-19.9023386,-44.1041379";
+  const exclude = "?exclude="; //?exclude=minutely,hourly,daily,alerts,flags
   const language = "?lang=pt";
   const unit = "?units=auto";
   
-  const url = `${BASE_URL}/${API_KEY}/${location}` + exclude + language + unit;
+  const url = `${BASE_URL}/${API_KEY}/${location}/${exclude}${language}${unit}`
 
   // https://api.darksky.net/forecast/d9c10be08af503c0c64748b3c4a95076/-18.5142135,-49.9495219?exclude=minutely,hourly,daily,alerts,flags?lang=pt?units=auto
   // Betim: -19.9417305,-44.332391
   // C = (F-32) /1,8
-  fetch(url).then((resp) => {
+
+  fetch(url).then((resp) => {    
     if (resp.status !== 200) {
       throw new Error(resp.statusText);
     }
@@ -204,7 +208,7 @@ function startServer() {
   // Start the server
   return app.listen('8000', () => {
     // eslint-disable-next-line no-console
-    console.log('Local DevServer Started on port 8000...');
+    console.log('Servidor local iniciado na porta 8000...');
   });
 }
 

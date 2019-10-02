@@ -84,7 +84,7 @@
             <span class="label">Vento:</span>
             <span class="value"></span>
             <span class="scale">km/h</span>
-            <span class="direction"></span>°
+            <!-- <span class="direction"></span>° -->
           </div>
           <div class="sunrise">
             <span class="label">Nascer do sol:</span>
@@ -179,21 +179,21 @@
   <!-- Dialog para adição de novo clima -->
   <div id="addDialogContainer">
     <div class="dialog">
-      <div class="dialog-title">Adicionar nova cidade</div>
+      <div class="dialog-title">Adicionar nova capital</div>
       <div class="dialog-body">
-        <!-- <select id="selectCityToAdd" aria-label="City to add">          
-          <option value="28.6472799,76.8130727">Dehli, India</option>
-          <option value="-5.7759362,106.1174957">Jakarta, Indonesia</option>
-          <option value="51.5287718,-0.2416815">London, UK</option>
-          <option value="40.6976701,-74.2598666">New York, USA</option>
-          <option value="48.8589507,2.2770202">Paris, France</option>
-          <option value="-64.8251018,-63.496847">Port Lockroy, Antarctica</option>
-          <option value="37.757815,-122.5076401">San Francisco, USA</option>
-          <option value="31.2243085,120.9162955">Shanghai, China</option>
-          <option value={{lat}}>Tokyo, Japan</option>
-        </select> -->
+        <select id="selectCityToAdd" aria-label="City to add">
+          <option id="userLocation" value="">Sua Localização</option>
+          <option value="-19.9023386,-44.1041379">Belo Horizonte, MG</option>
+          <option value="-20.2821076,-40.3207234">Vitória, ES</option>
+          <option value="-25.4947401,-49.4298853">Curitiba, PR</option>
+          <option value="-16.6954999,-49.4443554">Goiânia, GO</option>
+          <option value="9.9861542,-67.9011377">Rio Branco, AC</option>
+          <option value="-12.9012521,-38.5598958">Salvador, BA</option>
+          <option value="-23.6815314,-46.8754974">São Paulo, SP</option>
+          <option value="-22.9132525,-43.7261806">Rio de Janeiro, RJ</option>          
+        </select>
       
-        <div class="dialog-buttons">
+        <!-- <div class="dialog-buttons">
           <form action="">
             <div class="form-group">
               <input class="form-control mr-sm-2" type="text" placeholder="Pesquisar">
@@ -204,11 +204,12 @@
             </div>
           </form>
         </div>
-      </div>
-      <!-- <div class="dialog-buttons">
+      </div> -->
+
+      <div class="dialog-buttons">
         <button id="butDialogCancel" class="button">Cancelar</button>
         <button id="butDialogAdd" class="button">Add</button>
-      </div> -->
+      </div>
     </div>
   </div>
   <!-- Fim Dialog -->
@@ -226,6 +227,10 @@
 
   <!-- JavaScript -->
   <script>
+
+    user_lat = "";
+    user_long = "";
+
     // Registrar service worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -247,7 +252,6 @@
       // document.getElementById("main").style.marginLeft = "0";
     }
   </script>
-
 </body>
 
 </html>

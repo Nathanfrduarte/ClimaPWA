@@ -15,6 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
+
+//  Não sei o que é isso
 'use strict';
 
 // CODELAB: Update cache names any time any of the cached files change.

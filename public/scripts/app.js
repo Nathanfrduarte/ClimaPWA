@@ -2,11 +2,13 @@
  * Initialize the app, gets the list of locations from local storage, then
  * renders the initial data.
  */
+
 function init() {
   // Get the location list, and update the UI.
+  getLocalizacao();
   weatherApp.selectedLocations = loadLocationList();
   updateData();
-  getLocalizacao();
+
   // Set up the event handlers for all of the buttons.
   document.getElementById('butRefresh').addEventListener('click', updateData);
   document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
@@ -26,6 +28,7 @@ function getLocalizacao() {
     function showPosition(position) {
       user_lat = position.coords.latitude;
       user_long = position.coords.longitude;
+      document.getElementById('userLocation').value = user_lat + "," + user_long;  
     }
     //In case the permission is denied 
     function error() {
@@ -115,7 +118,7 @@ function renderForecast(card, data) {
   card.querySelector('.current .temperature .value').textContent = Math.round((data.currently.temperature-32)/1.8);
   card.querySelector('.current .humidity .value').textContent = Math.round(data.currently.humidity * 100);
   card.querySelector('.current .wind .value').textContent = Math.round(data.currently.windSpeed);
-  card.querySelector('.current .wind .direction').textContent = Math.round(data.currently.windBearing);
+  // card.querySelector('.current .wind .direction').textContent = Math.round(data.currently.windBearing);
   const sunrise = luxon.DateTime
     .fromSeconds(data.daily.data[0].sunriseTime)
     .setZone(data.timezone)
@@ -258,9 +261,11 @@ function loadLocationList() {
     }
   }
   if (!locations || Object.keys(locations).length === 0) {
-    const key = '-19.9417305,-44.332391';
+    // latLong = document.getElementById('userLocation').value;
+    // const key = document.getElementById('userLocation').value;
+    const key = "-19.9023386,-44.1041379";
     locations = {};
-    locations[key] = { label: 'Betim, MG', geo: '-19.9417305,-44.332391' };
+    locations[key] = { label: 'Belo Horizonte', geo: "-19.9023386,-44.1041379" };
   }
   return locations;
 }
