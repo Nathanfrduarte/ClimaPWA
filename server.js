@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-'use strict';
+// 'use strict';
 
 const express = require('express');
 const fetch = require('node-fetch');
@@ -184,7 +184,7 @@ function startServer() {
   const app = express();
 
   // Redirect HTTP to HTTPS,
-  app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
+//   app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
 
   // Logging for each request
   app.use((req, resp, next) => {
@@ -204,12 +204,13 @@ function startServer() {
 
   // Handle requests for static files
   app.use(express.static('public'));
-
+  
+  return app.listen(porta);
   // Start the server
-  return app.listen('8000', () => {
-    // eslint-disable-next-line no-console
-    console.log('Servidor local iniciado na porta 8000...');
-  });
+//   return app.listen('8000', () => {
+//     // eslint-disable-next-line no-console
+//     console.log('Servidor local iniciado na porta 8000...');
+//   });
 }
 
 startServer();
