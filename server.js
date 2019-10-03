@@ -205,7 +205,7 @@ function startServer() {
   // Handle requests for static files
   app.use(express.static('public'));
   
-   var porta = process.env.PORT || 8000;
+  var porta = process.env.PORT || 8000;
   
   return app.listen(porta);
   // Start the server
