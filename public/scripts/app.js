@@ -38,7 +38,7 @@ function getLocalizacao() {
 }
 
 // Não sei oq é isso
-'use strict';
+// 'use strict';
 
 const weatherApp = {
   selectedLocations: {},
