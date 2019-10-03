@@ -184,7 +184,7 @@ function startServer() {
   const app = express();
 
   // Redirect HTTP to HTTPS,
-//   app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
+  app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
 
   // Logging for each request
   app.use((req, resp, next) => {
