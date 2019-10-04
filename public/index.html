@@ -41,8 +41,8 @@
   <!-- Menu Lateral -->
   <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" style="padding-top: 50px;" onclick="closeNav()">&times;</a>
-      <a href="#" style="padding-top: 110px">Tela Principal</a>
-      <a href="#">Outra tela</a>
+      <a href="#" style="padding-top: 110px">Clima</a>
+      <a href="sobre.html">Sobre</a>
   </div>
   <!-- Fim menu lateral -->
 
@@ -87,11 +87,11 @@
             <!-- <span class="direction"></span>° -->
           </div>
           <div class="sunrise">
-            <span class="label">Nascer do sol:</span>
+            <span class="label">Amanhecer:</span>
             <span class="value"></span>
           </div>
           <div class="sunset">
-            <span class="label">Pôr do sol:</span>
+            <span class="label">Anoitecer:</span>
             <span class="value"></span>
           </div>
         </div>
@@ -181,7 +181,7 @@
     <div class="dialog">
       <div class="dialog-title">Adicionar nova capital</div>
       <div class="dialog-body">
-        <select id="selectCityToAdd" aria-label="City to add">
+        <select id="selectCityToAdd" class="form-control" aria-label="City to add">
           <option id="userLocation" value="">Sua Localização</option>
           <option value="-19.9023386,-44.1041379">Belo Horizonte, MG</option>
           <option value="-20.2821076,-40.3207234">Vitória, ES</option>
@@ -207,8 +207,11 @@
       </div> -->
 
       <div class="dialog-buttons">
-        <button id="butDialogCancel" class="button">Cancelar</button>
-        <button id="butDialogAdd" class="button">Add</button>
+        <br>
+        <button type="button" id="butDialogAdd" class="button btn btn-success">Adicionar</button>
+        <button type="button" id="butDialogCancel" class="button btn btn-secondary">Voltar</button>
+        <!-- <button id="butDialogCancel" class="button">Cancelar</button>
+        <button id="butDialogAdd" class="button">Add</button> -->
       </div>
     </div>
   </div>
