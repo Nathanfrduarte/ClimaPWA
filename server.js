@@ -81,14 +81,15 @@ function startServer() {
   // Handle requests for static files
   app.use(express.static('public'));
   
+  // Porta criada pelo Heroku ou porta local
   var porta = process.env.PORT || 8000;
-  
-  // return app.listen(porta);
   // Start the server
-  return app.listen('8000', () => {
-    // eslint-disable-next-line no-console
-    console.log('Servidor local iniciado na porta ' + porta + '...');
-  });
+  return app.listen(porta);
+  
+  // return app.listen('8000', () => {
+  //   // eslint-disable-next-line no-console
+  //   console.log('Servidor local iniciado na porta ' + porta + '...');
+  // });
 }
 
 startServer();
