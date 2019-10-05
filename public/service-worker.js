@@ -34,7 +34,7 @@ const FILES_TO_CACHE = [
 
 self.addEventListener('install', (evt) => {
   console.log('[ServiceWorker] Install');
-  // CODELAB: Precache static resources here.
+  // Precache static resources here.
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[ServiceWorker] Pre-caching offline page');
@@ -46,7 +46,7 @@ self.addEventListener('install', (evt) => {
 
 self.addEventListener('activate', (evt) => {
   console.log('[ServiceWorker] Activate');
-  // CODELAB: Remove previous cached data from disk.
+  // Remove previous cached data from disk.
   evt.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
@@ -62,7 +62,7 @@ self.addEventListener('activate', (evt) => {
 
 self.addEventListener('fetch', (evt) => {
   console.log('[ServiceWorker] Fetch', evt.request.url);
-  // CODELAB: Add fetch event handler here.
+  // Add fetch event handler here.
   if (evt.request.url.includes('/forecast/')) {
     console.log('[Service Worker] Fetch (data)', evt.request.url);
     evt.respondWith(
