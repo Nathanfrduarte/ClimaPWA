@@ -2,10 +2,12 @@
 
 O objetivo desta atividade foi experimentar a construção de uma aplicação web progressiva.
 
+A seguinte aplicação pode ser acesssada em: https://climapwa.herokuapp.com
+
 ## Descrição da aplicacão
 
 Trata-se de uma aplicação web progressiva meteorológica, com design responsivo.
-
+A seguinte aplicação pode ser acesssada em: https://climapwa.herokuapp.com
 Nela é possível consultar informações climáticas de algumas capitais do Brasil, como a temperatura atual, humidade, velocidade do vento e os horários de amanhecer e anoitecer do dia, de acordo com a localização. 
 
 É informado também as termperaturas máximas e mínimas dos próximos 7 dias, e de acordo com a imagem mostrada, é possível identificar se irão ser chuvosos ou ensolarados.
