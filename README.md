@@ -94,8 +94,8 @@ Manifesto:
 }
 ```
 
-  * R04.1 - O service worker é capaz de se instalar, ficando pronto para ser executado e de ativar, deixando o código pronto para uso.
-  * R04.2 - O service worker também permite o funcionamento offline da aplicação, já que recurera os recursos salvos em cache.
+   * R04.1 - O service worker é capaz de se instalar, ficando pronto para ser executado e de ativar, deixando o código pronto para uso.
+   * R04.2 - O service worker também permite o funcionamento offline da aplicação, já que recurera os recursos salvos em cache.
 
 ```javascript
 // Instalar Service Worker
