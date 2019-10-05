@@ -1,12 +1,9 @@
-
 const express = require('express');
 const fetch = require('node-fetch');
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 
-// CODELAB: Change this to add a delay (ms) before the server responds.
 const FORECAST_DELAY = 0;
 
-// const API_KEY = process.env.DARKSKY_API_KEY;
 const API_KEY = 'd9c10be08af503c0c64748b3c4a95076';
 const BASE_URL = `https://api.darksky.net/forecast`;
 
@@ -24,17 +21,12 @@ const BASE_URL = `https://api.darksky.net/forecast`;
 
 
 function getForecast(req, resp) {
-  // u = document.getElementById('userLocation').value;
   const location = req.params.location || "-19.9023386,-44.1041379";
   const exclude = "?exclude="; //?exclude=minutely,hourly,daily,alerts,flags
   const language = "?lang=pt";
   const unit = "?units=auto";
   
   const url = `${BASE_URL}/${API_KEY}/${location}/${exclude}${language}${unit}`
-
-  // https://api.darksky.net/forecast/d9c10be08af503c0c64748b3c4a95076/-18.5142135,-49.9495219?exclude=minutely,hourly,daily,alerts,flags?lang=pt?units=auto
-  // Betim: -19.9417305,-44.332391
-  // C = (F-32) /1,8
 
   fetch(url).then((resp) => {    
     if (resp.status !== 200) {
@@ -47,7 +39,6 @@ function getForecast(req, resp) {
     }, FORECAST_DELAY);
   }).catch((err) => {
     console.error('Dark Sky API Error:', err.message);
-    // resp.json(generateFakeForecast(location));
   });
 }
 
@@ -85,7 +76,7 @@ function startServer() {
   var porta = process.env.PORT || 8000;
   // Start the server
   return app.listen(porta);
-  
+    
   // return app.listen('8000', () => {
   //   // eslint-disable-next-line no-console
   //   console.log('Servidor local iniciado na porta ' + porta + '...');

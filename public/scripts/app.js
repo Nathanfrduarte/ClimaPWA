@@ -4,9 +4,10 @@
  */
 
 function init() {
-  // Get the location list, and update the UI.
+
   getLocalizacao();
   weatherApp.selectedLocations = loadLocationList();
+  // Get the location list, and update the UI.
   updateData();
 
   // Set up the event handlers for all of the buttons.
@@ -36,9 +37,6 @@ function getLocalizacao() {
     }
   }
 }
-
-// Não sei oq é isso
-// 'use strict';
 
 const weatherApp = {
   selectedLocations: {},
@@ -261,8 +259,6 @@ function loadLocationList() {
     }
   }
   if (!locations || Object.keys(locations).length === 0) {
-    // latLong = document.getElementById('userLocation').value;
-    // const key = document.getElementById('userLocation').value;
     const key = "-19.9023386,-44.1041379";
     locations = {};
     locations[key] = { label: 'Belo Horizonte', geo: "-19.9023386,-44.1041379" };
