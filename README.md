@@ -140,6 +140,8 @@ self.addEventListener('activate', (evt) => {
 
 ## Grupo
 
+Grupo 43: 
+
 * Ana Luiza Pires Barbosa
 * José Laranjeiras Junior
 * Maicon Wesleandro Souza
