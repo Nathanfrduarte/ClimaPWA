@@ -1,20 +1,14 @@
-/**
- * Initialize the app, gets the list of locations from local storage, then
- * renders the initial data.
- */
-
 function init() {
 
   getLocalizacao();
-  weatherApp.selectedLocations = loadLocationList();
-  // Get the location list, and update the UI.
-  updateData();
-
-  // Set up the event handlers for all of the buttons.
-  document.getElementById('butRefresh').addEventListener('click', updateData);
-  document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
-  document.getElementById('butDialogCancel').addEventListener('click', toggleAddDialog);
-  document.getElementById('butDialogAdd').addEventListener('click', addLocation);  
+  climaApp.locaisSelecionados = carregarListaLocalizacao();
+  // Atualizar lista de localizações
+  updateDados();
+  // Eventos para os botões
+  document.getElementById('butRefresh').addEventListener('click', updateDados);
+  document.getElementById('butAdd').addEventListener('click', mostrarAddDialog);
+  document.getElementById('butDialogCancel').addEventListener('click', mostrarAddDialog);
+  document.getElementById('butDialogAdd').addEventListener('click', addLocalizacao);  
 }
 
 // Permitir Localização atual
@@ -23,89 +17,75 @@ function getLocalizacao() {
   if (!navigator.geolocation) {
     alert("Esse navegador não tem suporte para localização");
   } else {
-    //This will make appear a pop up asking for permission 
-    navigator.geolocation.getCurrentPosition(showPosition, error);
-    //In case the permission is granted 
-    function showPosition(position) {
+    // PopUp para aceitar localização
+    navigator.geolocation.getCurrentPosition(mostrarPosicao, error);
+
+    function mostrarPosicao(position) {
       user_lat = position.coords.latitude;
       user_long = position.coords.longitude;
       document.getElementById('userLocation').value = user_lat + "," + user_long;  
     }
-    //In case the permission is denied 
+
     function error() {
       alert("Erro: Permita sua localização para um melhor funcionamento");
     }
   }
 }
 
-const weatherApp = {
-  selectedLocations: {},
+const climaApp = {
+  locaisSelecionados: {},
   addDialogContainer: document.getElementById('addDialogContainer'),
 };
 
-/**
- * Toggles the visibility of the add location dialog box.
- */
-function toggleAddDialog() {
-  weatherApp.addDialogContainer.classList.toggle('visible');
+// Exibição da caixa de adição de novo clima
+function mostrarAddDialog() {
+  climaApp.addDialogContainer.classList.toggle('visible');
 }
 
-/**
- * Event handler for butDialogAdd, adds the selected location to the list.
- */
-function addLocation() {
-  // Hide the dialog
-  toggleAddDialog();
+function addLocalizacao() {
+  // Exibir
+  mostrarAddDialog();
 
-  // Get the selected city
+  // Pegar a capital selecionada
   const select = document.getElementById('selectCityToAdd');
   const selected = select.options[select.selectedIndex];
   const geo = selected.value;
   const label = selected.textContent;
   const location = { label: label, geo: geo };
-  // Create a new card & get the weather data from the server
-  const card = getForecastCard(location);
-  getForecastFromNetwork(geo).then((forecast) => {
-    renderForecast(card, forecast);
+  // Criar novo cartão e requisitar informação de clima
+  const card = getCardClima(location);
+  getAtualizacaoClima(geo).then((forecast) => {
+    carregarClima(card, forecast);
   });
-  // Save the updated list of selected cities.
-  weatherApp.selectedLocations[geo] = location;
-  saveLocationList(weatherApp.selectedLocations);
+  // Salva a lista atualizada
+  climaApp.locaisSelecionados[geo] = location;
+  salvarListaLocalizacao(climaApp.locaisSelecionados);
 }
 
-/**
- * Event handler for .remove-city, removes a location from the list.
- *
- * @param {Event} evt
- */
-function removeLocation(evt) {
+// Função para remover card
+function removerLocalizacao(evt) {
   const parent = evt.srcElement.parentElement;
   parent.remove();
-  if (weatherApp.selectedLocations[parent.id]) {
-    delete weatherApp.selectedLocations[parent.id];
-    saveLocationList(weatherApp.selectedLocations);
+  if (climaApp.locaisSelecionados[parent.id]) {
+    delete climaApp.locaisSelecionados[parent.id];
+    salvarListaLocalizacao(climaApp.locaisSelecionados);
   }
 }
 
-/**
- * Renders the forecast data into the card element.
- *
- * @param {Element} card The card element to update.
- * @param {Object} data Weather forecast data to update the element with.
- */
-function renderForecast(card, data) {
-  // Find out when the element was last updated.
+// Função para processar as informações do clima
+function carregarClima(card, data) {
+  // Achar última atualização
   const cardLastUpdatedElem = card.querySelector('.card-last-updated');
   const cardLastUpdated = cardLastUpdatedElem.textContent;
   const lastUpdated = parseInt(cardLastUpdated);
 
-  // If the data on the element is newer, skip the update.
+  // Se é novo, pula a atualização
   if (lastUpdated >= data.currently.time) {
     return;
   }
   cardLastUpdatedElem.textContent = data.currently.time;
 
-  // Render the forecast data into the card.
+  // Carrega a previsão no cartão
   card.querySelector('.description').textContent = data.currently.summary;
   const forecastFrom = luxon.DateTime
     .fromSeconds(data.currently.time)
@@ -113,10 +93,11 @@ function renderForecast(card, data) {
     .toFormat('DDDD t');
   card.querySelector('.date').textContent = forecastFrom;
   card.querySelector('.current .icon').className = `icon ${data.currently.icon}`;
+  // Conversão de Fahrenheit para Celcius
   card.querySelector('.current .temperature .value').textContent = Math.round((data.currently.temperature-32)/1.8);
   card.querySelector('.current .humidity .value').textContent = Math.round(data.currently.humidity * 100);
   card.querySelector('.current .wind .value').textContent = Math.round(data.currently.windSpeed);
-  // card.querySelector('.current .wind .direction').textContent = Math.round(data.currently.windBearing);
+  // Formatação da data e hora com a biblioteca Luxon
   const sunrise = luxon.DateTime
     .fromSeconds(data.daily.data[0].sunriseTime)
     .setZone(data.timezone)
@@ -128,7 +109,7 @@ function renderForecast(card, data) {
     .toFormat('t');
   card.querySelector('.current .sunset .value').textContent = sunset;
 
-  // Render the next 7 days.
+  // Próximos 7 dias
   const futureTiles = card.querySelectorAll('.future .oneday');
   futureTiles.forEach((tile, index) => {
     const forecast = data.daily.data[index + 1];
@@ -142,20 +123,15 @@ function renderForecast(card, data) {
     tile.querySelector('.temp-low .value').textContent = Math.round((forecast.temperatureLow-32)/1.8);
   });
 
-  // If the loading spinner is still visible, remove it.
+  // Remover icone de "carregando"
   const spinner = card.querySelector('.card-spinner');
   if (spinner) {
     card.removeChild(spinner);
   }
 }
 
-/**
- * Get's the latest forecast data from the network.
- *
- * @param {string} coords Location object to.
- * @return {Object} The weather forecast, if the request fails, return null.
- */
-function getForecastFromNetwork(coords) {
+// Últimas atualizações de clima
+function getAtualizacaoClima(coords) {
   return fetch(`/forecast/${coords}`)
     .then((response) => {
       return response.json();
@@ -165,15 +141,8 @@ function getForecastFromNetwork(coords) {
     });
 }
 
-/**
- * Get's the cached forecast data from the caches object.
- *
- * @param {string} coords Location object to.
- * @return {Object} The weather forecast, if the request fails, return null.
- */
-function getForecastFromCache(coords) {
-  // CODELAB: Add code to get weather forecast from the caches object.
-  // CODELAB: Add code to get weather forecast from the caches object.
+// Função para pegar informações do cache
+function getClimaCache(coords) {
   if (!('caches' in window)) {
     return null;
   }
@@ -186,70 +155,53 @@ function getForecastFromCache(coords) {
       return null;
     })
     .catch((err) => {
-      console.error('Error getting data from cache', err);
+      console.error('Erro ao pegar dados em cache', err);
       return null;
     });
 }
 
-/**
- * Get's the HTML element for the weather forecast, or clones the template
- * and adds it to the DOM if we're adding a new item.
- *
- * @param {Object} location Location object
- * @return {Element} The element for the weather forecast.
- */
-function getForecastCard(location) {
+// Função para pegar as informações do Card ou então clonar o modelo do cartão
+function getCardClima(location) {
   const id = location.geo;
   const card = document.getElementById(id);
   if (card) {
     return card;
   }
-  const newCard = document.getElementById('weather-template').cloneNode(true);
-  newCard.querySelector('.location').textContent = location.label;
-  newCard.setAttribute('id', id);
-  newCard.querySelector('.remove-city').addEventListener('click', removeLocation);
-  document.querySelector('main').appendChild(newCard);
-  newCard.removeAttribute('hidden');
-  return newCard;
+  const novoCard = document.getElementById('weather-template').cloneNode(true);
+  novoCard.querySelector('.location').textContent = location.label;
+  novoCard.setAttribute('id', id);
+  novoCard.querySelector('.remove-city').addEventListener('click', removerLocalizacao);
+  document.querySelector('main').appendChild(novoCard);
+  novoCard.removeAttribute('hidden');
+  return novoCard;
 }
 
-/**
- * Gets the latest weather forecast data and updates each card with the
- * new data.
- */
-function updateData() {
-  Object.keys(weatherApp.selectedLocations).forEach((key) => {
-    const location = weatherApp.selectedLocations[key];
-    const card = getForecastCard(location);
-    // CODELAB: Add code to call getForecastFromCache
-    getForecastFromCache(location.geo)
+// Pega os dados pais recentes
+function updateDados() {
+  Object.keys(climaApp.locaisSelecionados).forEach((key) => {
+    const location = climaApp.locaisSelecionados[key];
+    const card = getCardClima(location);
+
+    getClimaCache(location.geo)
       .then((forecast) => {
-        renderForecast(card, forecast);
+        carregarClima(card, forecast);
       });
-    // Get the forecast data from the network.
-    getForecastFromNetwork(location.geo)
+
+    getAtualizacaoClima(location.geo)
       .then((forecast) => {
-        renderForecast(card, forecast);
+        carregarClima(card, forecast);
       });
   });  
 }
 
-/**
- * Saves the list of locations.
- *
- * @param {Object} locations The list of locations to save.
- */
-function saveLocationList(locations) {
+// Salvar localização(ões) na API Web Storage
+function salvarListaLocalizacao(locations) {
   const data = JSON.stringify(locations);
   localStorage.setItem('locationList', data);
 }
 
-/**
- * Loads the list of saved location.
- *
- * @return {Array}
- */
-function loadLocationList() {
+// Carregar localização(ões) salvas na API Web Storage
+function carregarListaLocalizacao() {
   let locations = localStorage.getItem('locationList');
   if (locations) {
     try {

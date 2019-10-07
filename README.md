@@ -31,6 +31,13 @@ Nela é possível consultar informações climáticas de algumas capitais do Bra
   * R02.2 - Com o dado da localização armazenado em uma lista, é possível utilizá-lo na página de climas para saber informações meteorológicas da posição atual do usuário.
 
 ```javascript
+// Salvar localização(ões) na API Web Storage
+function saveLocationList(locations) {
+  const data = JSON.stringify(locations);
+  localStorage.setItem('locationList', data);
+}
+
+// Carregar localização(ões) salvas
 function loadLocationList() {
   let locations = localStorage.getItem('locationList');
   if (locations) {
@@ -102,11 +109,11 @@ Manifesto:
 ```javascript
 // Instalar Service Worker
 self.addEventListener('install', (evt) => {
-  console.log('[ServiceWorker] Install');
-  // Precache static resources here.
+  console.log('[ServiceWorker] Instalado');
+  // Capturar cache existente
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[ServiceWorker] Pre-caching offline page');
+      console.log('[ServiceWorker] Capturando cache existente');
       return cache.addAll(FILES_TO_CACHE);
     })
   );
@@ -115,13 +122,13 @@ self.addEventListener('install', (evt) => {
 
 // Ativar Service Worker
 self.addEventListener('activate', (evt) => {
-  console.log('[ServiceWorker] Activate');
-  // Remove previous cached data from disk.
+  console.log('[ServiceWorker] Ativado');
+  // Remover cache antigo
   evt.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
         if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
-          console.log('[ServiceWorker] Removing old cache', key);
+          console.log('[ServiceWorker] Removendo cache antigo', key);
           return caches.delete(key);
         }
       }));
