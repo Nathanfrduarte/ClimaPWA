@@ -61,6 +61,7 @@ self.addEventListener('activate', (evt) => {
   self.clients.claim();
 });
 
+// Buscar dados
 self.addEventListener('fetch', (evt) => {
   console.log('[ServiceWorker] Buscando', evt.request.url);
 

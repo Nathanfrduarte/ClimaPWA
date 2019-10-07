@@ -4,13 +4,13 @@ O objetivo desta atividade foi experimentar a construção de uma aplicação we
 
 A seguinte aplicação pode ser acesssada em: https://climapwa.herokuapp.com
 
-## Descrição da aplicacão
+## Descrição da aplicação
 
 Trata-se de uma aplicação web progressiva meteorológica, com design responsivo.
 A seguinte aplicação pode ser acesssada em: https://climapwa.herokuapp.com
-Nela é possível consultar informações climáticas de algumas capitais do Brasil, como a temperatura atual, humidade, velocidade do vento e os horários de amanhecer e anoitecer do dia, de acordo com a localização. 
+Nela é possível consultar informações climáticas de algumas capitais do Brasil, como a temperatura atual, umidade, velocidade do vento e os horários de amanhecer e anoitecer do dia, de acordo com a localização. 
 
-É informado também as termperaturas máximas e mínimas dos próximos 7 dias, e de acordo com a imagem mostrada, é possível identificar se irão ser chuvosos ou ensolarados.
+É informado também as temperaturas máximas e mínimas dos próximos 7 dias, e de acordo com a imagem mostrada, é possível identificar se irão ser chuvosos ou ensolarados.
 
 ## Requisitos
 
@@ -56,7 +56,7 @@ function loadLocationList() {
 }
 ```
 
-* R03 - A aplicação possui um manifesto (manifest.webmanifest) referênciado nas páginas e devidamente formatado e com todos os conjunto de informações sobre a necessário para o correto funcionamento e instalação.Worker devidamente devidamente implementado na aplicação. Onde estão localizados em um arquivo separado (service-worker.js) somente para suas funções.
+* R03 - A aplicação possui um manifesto (manifest.webmanifest) referenciado nas páginas e devidamente formatado e com todos os conjunto de informações sobre a necessário para o correto funcionamento e instalação.Worker devidamente devidamente implementado na aplicação. Onde estão localizados em um arquivo separado (service-worker.js) somente para suas funções.
 
 Referência ao manifesto:
 
@@ -141,7 +141,7 @@ self.addEventListener('activate', (evt) => {
 ## Grupo
 
 * Ana Luiza Pires Barbosa
-* José Larajeiras Junior
+* José Laranjeiras Junior
 * Maicon Wesleandro Souza
 * Nathan de Freitas Duarte
 
