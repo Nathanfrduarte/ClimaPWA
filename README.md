@@ -7,7 +7,6 @@ A seguinte aplicação pode ser acesssada em: https://climapwa.herokuapp.com
 ## Descrição da aplicação
 
 Trata-se de uma aplicação web progressiva meteorológica, com design responsivo.
-A seguinte aplicação pode ser acesssada em: https://climapwa.herokuapp.com
 Nela é possível consultar informações climáticas de algumas capitais do Brasil, como a temperatura atual, umidade, velocidade do vento e os horários de amanhecer e anoitecer do dia, de acordo com a localização. 
 
 É informado também as temperaturas máximas e mínimas dos próximos 7 dias, e de acordo com a imagem mostrada, é possível identificar se irão ser chuvosos ou ensolarados.
