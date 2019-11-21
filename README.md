@@ -136,16 +136,6 @@ self.addEventListener('activate', (evt) => {
   self.clients.claim();
 });
 ```
-
-## Grupo
-
-Grupo 43: 
-
-* Ana Luiza Pires Barbosa
-* José Laranjeiras Junior
-* Maicon Wesleandro Souza
-* Nathan de Freitas Duarte
-
 ## API Utilizada
 
 [Dark Sky API](https://darksky.net/dev)
